@@ -40,8 +40,17 @@ class FeedbackViewSet(viewsets.ModelViewSet):
         """
         Set the queryset here so it filters on user.
         """
-        return super(FeedbackViewSet, self).get_queryset().filter(Q(sender=self.request.user) |
-                                                                  Q(recipient=self.request.user))
+        data = self.request.data
+        feedback_type = data.get('feedbackType', None)
+        if not feedback_type:
+            return None
+
+        # Filter whether the user is the sender or recipient of the feedback.
+        # To prevent that the sender can change the feedback rating of the recipient.
+        if feedback_type == 'receive':
+            return super(FeedbackViewSet, self).get_queryset().filter(sender=self.request.user)
+        elif feedback_type == 'give':
+            return super(FeedbackViewSet, self).get_queryset().filter(recipient=self.request.user)
 
 
 class FeedbackAskBase(APIView):
