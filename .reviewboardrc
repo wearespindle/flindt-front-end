@@ -1,3 +1,0 @@
-REPOSITORY = 'Feedback Tool'
-TRACKING_BRANCH = 'origin/develop'
-REVIEWBOARD_URL = 'https://rbcommons.com/s/VoIPGRID/'
