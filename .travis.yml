@@ -1,27 +1,23 @@
 language: node_js
 node_js:
-  - node
-
+- node
 script:
-  - npm i
-  - npm run build
-
+- npm i
+- npm run build
 deploy:
   provider: s3
   access_key_id: AKIAINA3HRDOPMJGPGPQ
   secret_access_key:
-    secure: rG13BsJMhyNoCsfq37g1sY/7fKJ07UNMCmmSC89fIVp0wgVw2O2Z7VftdWxjqnFuQu2KbV5XnnzCRtnnGHCWLiflJF2MwSEr5Fz15BdH8TziNlTUlj5G6PcWg8wu6unZMGtvHRLaT9nTKdGo6s3AvwcO9MddiXBAAq/6NAwGkDo1gI58LRAz2z+PWEghe3XZ2jCkc5N/RLwT9ibQ4JaFG/nE9hba68FOMbwlblqr2jKLBJ7EnCi7rePk2KZglNS7/MIA5Fm2jbB+u+NdSRoVPUs+Ulb3AGPKkhrXJwYqs5Bse9KZJJ004/UaAfx3YDb/gTDINQlwR2VyS9Efewp9lnHsSh4i6vMDoaLCECZYy3r9f3sKOC+wphgkAqn1mjoMfWrSJESDKrHkvzcs95P7qduidVaKgxU5wkptNzq8/iGU/FigvUc0TcDez6CqpL7sD7At5X5Z0MxYQ0Nq/GvGaOcRXJB90pjukhpGDNa2FVPA/fSKe7KN640UTN91QS9Fa1FDOab3ngIXFUWBCqf+ScD6poywEDyvY28DlSj/7b+SjaNgFgv4hv4XHPhN2TTgXVx90CreXQBAEnSS9RU8nagKhAwjltQDERI/9hclxoOdy9f4KkCDz2UzrnT00IpoeY3IdhpJwGlKIVCphRaz18mFcFFZA3PSg8ZSlinrgtw=
+    secure: uEW0TaFx2kthh4YX9Put+7rBQRer+tJQYuEjtsaqXdOw1pezc7BBIaT5s80YgGrfd+X3xy46sa5MlAL4WQ+xRfxWH24kCszrjIXegVTDJIrzBsMp88lFesa+2kVsuVDsIjrgYgPVN6LjKneJ+NcvpmedUYxTNxmC7xhucjCH/d9nxAwhnkvopE+OjFQHNJANI7jylTYmU0iF8I+wJOw1Ut8IpBVetbnOxhhfLLRwKmq7aavCMfddw8t4arcVwWi+DB2O9+hXLq/+/qUHo3TiB00O0+eTBL8dkzYGAHZFiME6q0FMq57tRoQkMTXVn+rdonaFjrKjxrdbXhDXZjX7zdETT7PmgrxFOH5zce1/lKpq2QzNyvfObAd44NNagpsNFYEW2/rYbEYxgAzAq8IzEg5i3hyoxB7o8qZw6DBkDhV1sKc2EPKOSKeVicj2TGz/zB7GNK5e/KsyNckrvrFXGUgKfNZ1x9e0xxjF0hNF8xQgqAwhqTfKB55WbrwHhk5YHxC/HZILJ+Bc2NoDfwVfU68GA4dFrClQoq369Fv1j849QvY0iHdJ3YndNIV/SJEvsj6iJRBqxLQSvmO3mFQ3fQegbRKzJ5OvHHWbss0pSa1mVqc6YUaRyWuh+evuwZ4bS8Nb0tVHh8u9KME8lw2Nw0iDB355Y9PnzduMDX3yeMg=
   bucket: feedbag.wearespindle.com
   region: eu-west-1
   acl: public_read
   skip_cleanup: true
   local_dir: build
-
 branches:
   only:
   - master
   - "/^hotfix/"
-
 notifications:
   email: false
   slack:
@@ -29,4 +25,3 @@ notifications:
     on_failure: always
     rooms:
       secure: hTr3o0fY3iLktG21ZUgOU7sPKFIDRa0U8vvpFFIQI64zmyf60uCTWmzMozRkDNk8iWgedwmcL+CZKrcBpLWekHt0HivmD+xGVIjdtZDNfLN5gdGNAbS/UKzx2Axt5HTca84jAa8Ukgq601c0uNKfQlwHMAamL/rI9Z+H4YSLcbeQclNbcxqzaOgb6osKOAwSOete9j7JW0wa4s6Vb4ETVPAFR7vICYuH4jzG4C5BURgYZHp3CO9GlIaYcoI1lt6r/868Y5qt5v61h2v1jz2ZcV7sfxsEuDe0zpQjqhEaDzTaA6WLoQWWmZUDii3Rw6X8ByZtMUrhbk+HL9FLxpFTi45WZzE+kMZcg1cMNydMVxHv9knvAW4IIGrCJqBgH72lGEf9rJTqgUEUFvgzm8Bf4JoOHJCCN698YnHmphPzVg8DlPIDvs8Y55PeLgnk+ARWD+CzNotPWJcRomvz9FnmRMEW7v0a6s26JPNHzeUDcZvB36d66iwexb8cA/FvZzbHDQo34YO1hQmW0S3iLYvGJN95OvTVGoN3K0STgJwAr7gG3DzJ7LtGRebGGGZwekFreZk+g4e9GHGVZd2d+Ve335yfRuV/w4he/i848qFP0cHvFdb9sOBg62MZiA1nM5dN/z66yKqWx5ej4n/u/wdN08H5BIRLjb5E8n7UOMyUXxw=
-
