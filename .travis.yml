@@ -20,7 +20,7 @@ deploy:
   bucket: feedbag.wearespindle.com
   acl: public_read
   skip_cleanup: true
-  local_dir: public
+  local_dir: build
 
 notifications:
   email: false
