@@ -13,11 +13,7 @@ import RoleModalButton from '../components/RoleModalButton';
 import SkipFeedbackModalButton from '../components/SkipFeedbackModalButton';
 import Header from '../components/header';
 
-import {
-  cleanFeedback,
-  fetchFeedback,
-  editFeedback
-} from '../actions/feedback';
+import { cleanFeedback, fetchFeedback, editFeedback } from '../actions/feedback';
 
 // renderField component for reduxForms.
 const renderTextArea = ({ input, meta: { touched, error } }) => (
@@ -142,7 +138,6 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
     }
 
     let person = feedback.recipient;
-    const sender = feedback.sender;
     const { handleSubmit } = this.props;
     const ratings = feedback.round.available_ratings;
     const role = feedback.role.role;
@@ -187,24 +182,15 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                   </td>
                   <td data-label="Circle">
                     {role.parent && (
-                      <RoleModalButton
-                        accessToken={accessToken}
-                        role={role.parent.id}
-                      >
+                      <RoleModalButton accessToken={accessToken} role={role.parent.id}>
                         {role.parent.name}
                       </RoleModalButton>
                     )}
                   </td>
                   <td data-label="Received on">
-                    <Time
-                      value={feedback.date}
-                      locale="EN"
-                      format="D MMMM YYYY"
-                    />
+                    <Time value={feedback.date} locale="EN" format="D MMMM YYYY" />
                   </td>
-                  {requested && (
-                    <td>Feedback requested by {person.first_name}</td>
-                  )}
+                  {requested && <td>Feedback requested by {person.first_name}</td>}
                 </tr>
               </tbody>
             </table>
@@ -225,10 +211,7 @@ let GiveRoleFeedbackClass = class GiveRoleFeedback extends Component {
                             <strong>{rating.description}</strong>
                             <span className="is-required">*</span>
                           </label>
-                          <Field
-                            name={rating.name}
-                            component={renderTextArea}
-                          />
+                          <Field name={rating.name} component={renderTextArea} />
                         </div>
                       </div>
                     );

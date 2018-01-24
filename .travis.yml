@@ -1,43 +1,31 @@
-sudo: required
-
-services:
-  - docker
-
 branches:
-  # Only build on these branches.
   only:
-    - master
-    - develop
-    - /^hotfix/
+  - master
+  - develop
+  - "/^hotfix/"
 
-env:
-  global:
-    - TZ=Europe/Amsterdam
-    - GITHUB_REPO="wearespindle/flindt"
-    - DOCKER_COMPOSE_VERSION=1.14.0
-
-language: python
-python:
-  - "3.4"
-
-before_install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-
-before_script:
-  # Echo some variables for debug purposes.
-  - echo "Current datetime is $(date +'%Y%m%d%H%M')"
+language: node_js
+node_js:
+  - node
 
 script:
-  # Always build new images for docker.
-  - docker-compose -f docker-compose.yml build
+  - npm i
+  - npm run build
+
+deploy:
+  provider: s3
+  access_key_id: AKIAINA3HRDOPMJGPGPQ
+  secret_access_key:
+    secure: rG13BsJMhyNoCsfq37g1sY/7fKJ07UNMCmmSC89fIVp0wgVw2O2Z7VftdWxjqnFuQu2KbV5XnnzCRtnnGHCWLiflJF2MwSEr5Fz15BdH8TziNlTUlj5G6PcWg8wu6unZMGtvHRLaT9nTKdGo6s3AvwcO9MddiXBAAq/6NAwGkDo1gI58LRAz2z+PWEghe3XZ2jCkc5N/RLwT9ibQ4JaFG/nE9hba68FOMbwlblqr2jKLBJ7EnCi7rePk2KZglNS7/MIA5Fm2jbB+u+NdSRoVPUs+Ulb3AGPKkhrXJwYqs5Bse9KZJJ004/UaAfx3YDb/gTDINQlwR2VyS9Efewp9lnHsSh4i6vMDoaLCECZYy3r9f3sKOC+wphgkAqn1mjoMfWrSJESDKrHkvzcs95P7qduidVaKgxU5wkptNzq8/iGU/FigvUc0TcDez6CqpL7sD7At5X5Z0MxYQ0Nq/GvGaOcRXJB90pjukhpGDNa2FVPA/fSKe7KN640UTN91QS9Fa1FDOab3ngIXFUWBCqf+ScD6poywEDyvY28DlSj/7b+SjaNgFgv4hv4XHPhN2TTgXVx90CreXQBAEnSS9RU8nagKhAwjltQDERI/9hclxoOdy9f4KkCDz2UzrnT00IpoeY3IdhpJwGlKIVCphRaz18mFcFFZA3PSg8ZSlinrgtw=
+  bucket: feedbag.wearespindle.com
+  acl: public_read
+  skip_cleanup: true
+  local_dir: public
 
 notifications:
   email: false
   slack:
-    on_success: always # default: always
-    on_failure: always # default: always
+    on_success: always
+    on_failure: always
     rooms:
       secure: hTr3o0fY3iLktG21ZUgOU7sPKFIDRa0U8vvpFFIQI64zmyf60uCTWmzMozRkDNk8iWgedwmcL+CZKrcBpLWekHt0HivmD+xGVIjdtZDNfLN5gdGNAbS/UKzx2Axt5HTca84jAa8Ukgq601c0uNKfQlwHMAamL/rI9Z+H4YSLcbeQclNbcxqzaOgb6osKOAwSOete9j7JW0wa4s6Vb4ETVPAFR7vICYuH4jzG4C5BURgYZHp3CO9GlIaYcoI1lt6r/868Y5qt5v61h2v1jz2ZcV7sfxsEuDe0zpQjqhEaDzTaA6WLoQWWmZUDii3Rw6X8ByZtMUrhbk+HL9FLxpFTi45WZzE+kMZcg1cMNydMVxHv9knvAW4IIGrCJqBgH72lGEf9rJTqgUEUFvgzm8Bf4JoOHJCCN698YnHmphPzVg8DlPIDvs8Y55PeLgnk+ARWD+CzNotPWJcRomvz9FnmRMEW7v0a6s26JPNHzeUDcZvB36d66iwexb8cA/FvZzbHDQo34YO1hQmW0S3iLYvGJN95OvTVGoN3K0STgJwAr7gG3DzJ7LtGRebGGGZwekFreZk+g4e9GHGVZd2d+Ve335yfRuV/w4he/i848qFP0cHvFdb9sOBg62MZiA1nM5dN/z66yKqWx5ej4n/u/wdN08H5BIRLjb5E8n7UOMyUXxw=
