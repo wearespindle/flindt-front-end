@@ -12,6 +12,8 @@ deploy:
   bucket: flindt.wearespindle.com
   region: eu-west-1
   acl: public_read
+  skip_cleanup: true
+  local_dir: build
   on:
     repo: wearespindle/flindt-front-end
 branches:
