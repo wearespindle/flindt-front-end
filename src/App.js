@@ -33,6 +33,13 @@ import ReceivedFeedbackList from './pages/ReceivedFeedbackList';
 import AuthContainer from './containers/auth_container';
 
 class App extends Component {
+  componentDidMount() {
+    const { hash } = document.location;
+    if (hash && hash.indexOf('#/') === 0) {
+      document.location = hash.replace('#/', '');
+    }
+  }
+
   handleLogOutUser = e => {
     e.preventDefault();
     logOut()
