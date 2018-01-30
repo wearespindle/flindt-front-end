@@ -1,14 +1,15 @@
 # Getting Started
 
-Webpack enabled front end
+A [Webpack](https://webpack.js.org/)-enabled front end for the Flindt feedback tool.
 
-## Run the frontend without Docker
+## Run the front end
 
-You're able to run the front end without Docker but remember to still run the backend docker for this to work.
+You're able to run the front end without Docker.\
+But remember to still run the [backend Docker](https://github.com/wearespindle/flindt#docker-related) for this to work.
 
-```
-	> npm i
-	> npm run start
+```txt
+npm i
+npm run start
 ```
 
 Live reload is currently not supported, but you know what they say:
