@@ -27,7 +27,7 @@ npm run start
 
 The command `docker-compose up` will setup a multi-stage build Docker-container.\
 Inside is the front end statically build and served through nginx webserver.\
-It can be reached via `htpp://localhost:3000`.
+It can be reached via `http://localhost:3000`.
 
 In both cases you also need to run the [database and backend Docker](https://github.com/wearespindle/flindt#docker-related)-containers for Flindt to work.
 
