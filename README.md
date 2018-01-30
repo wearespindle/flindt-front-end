@@ -10,7 +10,7 @@ A [Webpack](https://webpack.js.org/)-enabled front end for the Flindt feedback t
 
 ## Status
 
-<img src="https://api.travis-ci.org/wearespindle/flindt-front-end.svg?branch=master alt=Build status" />
+<img src="https://api.travis-ci.org/wearespindle/flindt-front-end.svg?branch=master" alt="Build status" />
 
 Active / maintained.
 
