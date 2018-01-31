@@ -1,8 +1,0 @@
-version: '2.0'
-
-services:
-  frontend:
-    build: .
-    ports:
-      # ext:int port.
-      - "3000:80"
