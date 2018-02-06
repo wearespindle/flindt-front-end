@@ -47,7 +47,7 @@ const renderSelect = ({
         </option>
       ))}
       {label === 'circle' && (
-        <option value="no_cirlce">No Specific Circle</option>
+        <option value="no_circle">No Specific Circle</option>
       )}
     </select>
     {touched && error && <span>{error}</span>}
