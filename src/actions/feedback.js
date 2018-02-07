@@ -55,11 +55,11 @@ export function fetchFeedbackAsReceiver(
   };
 }
 
-export function editFeedback(props, accessToken) {
+export function editFeedback(props, accessToken, type = 'give') {
   const request = axios({
     method: 'PATCH',
     data: props,
-    url: `${ROOT_URL}/feedbacks/${props.id}/`,
+    url: `${ROOT_URL}/feedback/${type}/${props.id}/`,
     headers: { Authorization: `Bearer ${accessToken}` }
   });
 
@@ -69,10 +69,10 @@ export function editFeedback(props, accessToken) {
   };
 }
 
-export function fetchFeedback(accessToken, id) {
+export function fetchFeedback(accessToken, id, type = 'give') {
   const requestFeedback = axios({
     method: 'GET',
-    url: `${ROOT_URL}/feedbacks/${id}/`,
+    url: `${ROOT_URL}/feedback/${type}/${id}/`,
     headers: { Authorization: `Bearer ${accessToken}` }
   });
 
