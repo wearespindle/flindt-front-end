@@ -55,7 +55,7 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
     let accessToken = this.props.user.user.access_token;
 
     this.props
-      .fetchFeedback(accessToken, this.props.match.params.feedbackId)
+      .fetchFeedback(accessToken, this.props.match.params.feedbackId, 'receive')
       .then(response => {
         if (response.payload.status === 200) {
           const {
@@ -96,7 +96,8 @@ let ReceivedFeedbackClass = class ReceivedFeedback extends React.Component {
           how_valuable,
           actionable_content: actionableContent
         },
-        accessToken
+        accessToken,
+        'receive'
       )
       .then(response => {
         if (response.payload.status !== 200) {

@@ -46,6 +46,9 @@ const renderSelect = ({
           {option.text}
         </option>
       ))}
+      {label === 'circle' && (
+        <option value="no_circle">No Specific Circle</option>
+      )}
     </select>
     {touched && error && <span>{error}</span>}
   </Fragment>
@@ -109,8 +112,13 @@ class AskFeedback extends Component {
       persons: []
     });
 
-    this.load({ path: 'roles', circleId: value });
-    this.load({ path: 'person', type: 'persons', circleId: value });
+    if (value === 'no_circle') {
+      this.load({ path: 'roles' });
+      this.load({ path: 'person', type: 'persons' });
+    } else {
+      this.load({ path: 'roles', circleId: value });
+      this.load({ path: 'person', type: 'persons', circleId: value });
+    }
   };
 
   genericHandler = ({ target }) => {
@@ -118,7 +126,6 @@ class AskFeedback extends Component {
   };
 
   _handleSubmit = values => {
-    // debugger;
     let accessToken = this.props.user.user.access_token;
     let feedbackFromPersonId = values.person;
     let feedbackOnRoleId = values.role;
@@ -190,6 +197,11 @@ class AskFeedback extends Component {
                         disabled={circles.length === 0 || disabled}
                         onChange={this.circleHandler}
                       />
+
+                      <p className="help-text">
+                        Choose 'No Specific Circle' if you want to request
+                        feedback from someone outside your circles.
+                      </p>
                     </label>
                   </div>
 
