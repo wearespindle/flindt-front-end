@@ -49,7 +49,7 @@ const FeedbackRow = props => {
   return (
     <tr>
       <td data-label="Person">
-        {person.first_name} {person.last_name}
+        {person.first_name} {person.prefix } {person.last_name}
       </td>
       <td data-label="Role">
         {role && (
