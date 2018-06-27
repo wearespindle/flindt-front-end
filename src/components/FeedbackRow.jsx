@@ -3,12 +3,16 @@ import propTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Time from 'react-time';
 
+const moment = require('moment');
+
 require('moment/locale/nl');
+
+
 
 const FeedbackRow = props => {
   let role = null;
   let circle = '';
-  let action, url, requested;
+  let action, url, requested, actionableReminder;
 
   if (props.details.role) {
     role = props.details.role.role.name;
@@ -38,6 +42,11 @@ const FeedbackRow = props => {
         <i className="fa fa-eye" /> Check feedback
       </Link>
     );
+
+    actionableReminder = props.details.actionable_got_reminded === false &&
+    moment(props.details.date).isAfter(moment().clone().subtract(14, 'days').startOf('day')) &&
+    moment(props.details.date).isBefore(moment())
+
   } else {
     action = (
       <Link to={`/${url}/${props.details.id}`}>
@@ -49,6 +58,9 @@ const FeedbackRow = props => {
   return (
     <tr>
       <td data-label="Person">
+          {actionableReminder &&
+              <span className="actionable-reminder-indicator"><i className="fa fa-exclamation-triangle"></i></span>
+            }
         {person.first_name} {person.last_name}
       </td>
       <td data-label="Role">

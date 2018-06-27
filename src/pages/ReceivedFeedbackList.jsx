@@ -5,6 +5,8 @@ import { fetchFeedbackAsReceiver } from '../actions/feedback';
 import FeedbackRow from '../components/FeedbackRow';
 import Header from '../components/header';
 
+const moment = require('moment');
+
 class ReceivedFeedbackList extends Component {
   componentWillMount() {
     this.get(this.props);
@@ -19,6 +21,58 @@ class ReceivedFeedbackList extends Component {
       this.props.fetchFeedbackAsReceiver(nextProps.access_token);
     }
   };
+
+  dismissActionableReminders() {
+    // const feedbackId = this.getFeedbackId();
+    const accessToken = this.props.user.user.access_token;
+
+
+    this.props.feedback
+        .filter(feedbackObject =>
+            feedbackObject.actionable_got_reminded === false &&
+            moment(feedbackObject.date).isAfter(moment().clone().subtract(14, 'days').startOf('day')) &&
+            moment(feedbackObject.date).isBefore(moment())
+        ).map(feedbackObject => console.log(feedbackObject));
+
+    // const skippedFeedbackReason = values.skippedFeedbackReason;
+    //
+    // this.props
+    //   .editFeedback(
+    //     {
+    //       id: feedbackId,
+    //       status: 2,
+    //       skipped_feedback_reason: skippedFeedbackReason
+    //     },
+    //     accessToken
+    //   )
+    //   .then(response => {
+    //     if (response.payload.status !== 200) {
+    //       this.props.dispatch(
+    //         Notifications.error({
+    //           title: 'Error!',
+    //           message: 'Something went wrong while saving the data!',
+    //           position: 'tr',
+    //           autoDismiss: 2
+    //         })
+    //       );
+    //     } else {
+    //       this.props.dispatch(
+    //         Notifications.success({
+    //           title: 'Sweet success!',
+    //           message: 'Feedback succesfully saved! Thanks!',
+    //           position: 'tr',
+    //           autoDismiss: 2
+    //         })
+    //       );
+    //
+    //       this.props.hideModal();
+    //
+    //       // Send the user back to his feedback overview after a succesful action.
+    //       history.push('/give-feedback');
+    //     }
+    //   });
+  };
+
 
   render() {
     if (!this.props.feedback.length) {
@@ -53,6 +107,14 @@ class ReceivedFeedbackList extends Component {
     }
 
     let feedback = this.props.feedback;
+    let actionableReminderArr = [];
+
+    const actionableReminder = feedback
+        .filter(feedbackObject =>
+            feedbackObject.actionable_got_reminded === false &&
+            moment(feedbackObject.date).isAfter(moment().clone().subtract(14, 'days').startOf('day')) &&
+            moment(feedbackObject.date).isBefore(moment())
+        );
 
     return (
       <div className="content--wrapper">
@@ -68,6 +130,15 @@ class ReceivedFeedbackList extends Component {
         <div className="content">
           <div className="feedbacklist--wrapper">
             <h2>Received feedback</h2>
+
+            { actionableReminder &&
+                <div className="label--neutral">
+                    Hey, I noticed you wrote a follow-up action when you rated your received feedback. Have you thought about those actions yet? I marked the ones with a blue exclamation mark.
+                    <a onClick={() => this.dismissActionableReminders()}>
+                      <i className="fa fa-close" />
+                    </a>
+                </div>
+            }
 
             <table>
               <thead>
