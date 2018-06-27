@@ -7,8 +7,6 @@ const moment = require('moment');
 
 require('moment/locale/nl');
 
-
-
 const FeedbackRow = props => {
   let role = null;
   let circle = '';
@@ -43,10 +41,16 @@ const FeedbackRow = props => {
       </Link>
     );
 
-    actionableReminder = props.details.actionable_got_reminded === false &&
-    moment(props.details.date).isAfter(moment().clone().subtract(14, 'days').startOf('day')) &&
-    moment(props.details.date).isBefore(moment())
-
+    actionableReminder =
+      props.details.actionable === true &&
+      props.details.actionable_got_reminded === false &&
+      moment(props.details.date).isAfter(
+        moment()
+          .clone()
+          .subtract(14, 'days')
+          .startOf('day')
+      ) &&
+      moment(props.details.date).isBefore(moment());
   } else {
     action = (
       <Link to={`/${url}/${props.details.id}`}>
@@ -58,9 +62,11 @@ const FeedbackRow = props => {
   return (
     <tr>
       <td data-label="Person">
-          {actionableReminder &&
-              <span className="actionable-reminder-indicator"><i className="fa fa-exclamation-triangle"></i></span>
-            }
+        {actionableReminder && (
+          <span className="actionable-reminder-indicator">
+            <i className="fa fa-exclamation-triangle" />
+          </span>
+        )}
         {person.first_name} {person.last_name}
       </td>
       <td data-label="Role">
