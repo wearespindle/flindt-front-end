@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 
-import { fetchFeedbackAsSender } from '../actions/feedback';
+import { fetchFeedbackArchiveAsSender } from '../actions/feedback';
 import FeedbackRow from '../components/FeedbackRow';
 import Header from '../components/header';
 
@@ -12,19 +12,17 @@ class GiveFeedbackListArchive extends Component {
     super(props);
 
     this.state = {
-      data: [],
       offset: 0,
-      limit: 8
+      limit: 8,
+      pageCount: 0
     };
-
-    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentWillMount() {
     let accessToken = this.props.user.user.access_token;
     let offset = this.state.offset;
     this.props
-      .fetchFeedbackAsSender(accessToken, this.state.limit, offset)
+      .fetchFeedbackArchiveAsSender(accessToken, this.state.limit, offset)
       .then(response => {
         this.setState({
           pageCount: Math.ceil(response.payload.data.count / this.state.limit)
@@ -32,24 +30,26 @@ class GiveFeedbackListArchive extends Component {
       });
   }
 
-  handlePageClick(data) {
+  handlePaginationClick = data => {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.limit);
     let accessToken = this.props.user.user.access_token;
 
     this.setState({ offset }, () => {
       this.props
-        .fetchFeedbackAsSender(accessToken, this.state.limit, offset)
+        .fetchFeedbackArchiveAsSender(accessToken, this.state.limit, offset)
         .then(response => {
           this.setState({
             pageCount: Math.ceil(response.payload.data.count / this.state.limit)
           });
         });
     });
-  }
+  };
 
   render() {
-    if (!this.props.feedback.length) {
+    const { loading, feedback } = this.props;
+
+    if (!feedback.length) {
       return (
         <div className="content--wrapper">
           <div className="content--header">
@@ -61,7 +61,7 @@ class GiveFeedbackListArchive extends Component {
             </div>
           </div>
 
-          {this.props.loading && (
+          {loading ? (
             <div className="content">
               <div className="spinner">
                 <div className="bounce1" />
@@ -69,28 +69,15 @@ class GiveFeedbackListArchive extends Component {
                 <div className="bounce3" />
               </div>
             </div>
-          )}
-          {!this.props.loading && (
+          ) : (
             <div className="content is-text-center has-margin-top-100">
-              <h3>
-                This list is empty because you have not given feedback yet!
-              </h3>
+              <h3>This list is empty because you have not given feedback yet!</h3>
               <div className="content--no-feedback" />
             </div>
           )}
         </div>
       );
     }
-
-    let complete = [];
-
-    this.props.feedback.map(feedbackObject => {
-      if (feedbackObject.status === 1) {
-        complete.push(feedbackObject);
-      }
-
-      return null;
-    });
 
     return (
       <div className="content--wrapper">
@@ -119,11 +106,11 @@ class GiveFeedbackListArchive extends Component {
                 </tr>
               </thead>
               <tbody>
-                {complete.map(completeObject => (
+                {feedback.map(feedbackObject => (
                   <FeedbackRow
-                    key={completeObject.id}
-                    index={completeObject.id}
-                    details={completeObject}
+                    key={feedbackObject.id}
+                    index={feedbackObject.id}
+                    details={feedbackObject}
                     completed
                   />
                 ))}
@@ -136,14 +123,14 @@ class GiveFeedbackListArchive extends Component {
               previousLabel={<i className="fa fa-chevron-left" />}
               nextLabel={<i className="fa fa-chevron-right" />}
               breakLabel={<a href="">...</a>}
-              breakClassName={'break-me'}
+              breakClassName="break-me"
               pageCount={this.state.pageCount}
               marginPagesDisplayed={2}
               pageRangeDisplayed={5}
-              onPageChange={this.handlePageClick}
-              containerClassName={'pagination'}
-              subContainerClassName={'pages pagination'}
-              activeClassName={'active'}
+              onPageChange={this.handlePaginationClick}
+              containerClassName="pagination"
+              subContainerClassName="pages pagination"
+              activeClassName="active"
             />
           )}
         </div>
@@ -167,6 +154,7 @@ GiveFeedbackListArchive.propTypes = {
   loading: propTypes.bool
 };
 
-export default connect(mapStateToProps, { fetchFeedbackAsSender })(
-  GiveFeedbackListArchive
-);
+export default connect(
+  mapStateToProps,
+  { fetchFeedbackArchiveAsSender }
+)(GiveFeedbackListArchive);
