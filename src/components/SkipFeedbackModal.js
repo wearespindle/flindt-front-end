@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid  */
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
