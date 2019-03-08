@@ -54,7 +54,7 @@ class Login extends Component {
 
             <hr />
 
-            <a id="google-plus-signin-button" className="login--google">
+            <a id="google-oauth2-signin-button" className="login--google">
               <img src={signinButton} alt="Login with Google" />
               Sign in with Google
               <i className="fa fa-chevron-right" />

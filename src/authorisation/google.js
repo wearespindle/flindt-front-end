@@ -64,7 +64,7 @@ export function setupLogin(handlers) {
   return initialised.then(() => {
     return new Promise((resolve, reject) => {
       window.gapi.auth2.getAuthInstance().then(auth2 => {
-        auth2.attachClickHandler('google-plus-signin-button', {}, () => {
+        auth2.attachClickHandler('google-oauth2-signin-button', {}, () => {
           postLoginActions(handlers);
         });
         resolve();
