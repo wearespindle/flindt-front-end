@@ -26,7 +26,7 @@ export function userLogin(googleToken) {
     data: {
       grant_type: 'convert_token',
       client_id: 'DsHaTowmFoOr3GQLOOoJaXQpViaV6NsIFzOVY3ME',
-      backend: 'google-plus',
+      backend: 'google-oauth2',
       token: googleToken
     }
   });
