@@ -14,3 +14,6 @@ dist
 node_modules
 yarn.lock
 .env
+.direnv.master*
+.envrc
+default.nix
